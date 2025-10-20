@@ -73,3 +73,5 @@ class UserRepository {
         return $error;
     }
 }
+
+?>
