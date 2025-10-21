@@ -31,6 +31,9 @@ if ($_SESSION['login'] == 1) {
             require_once 'views/viewProduct.phtml';
     }else{
         $products = ProductRepository::getProducts() ?? [];
+        if (($_SESSION['user'])) {
+            $carrito = PurchaseLineRepository::getProductsByPurchase(PurchaseRepository::getActivePurchase($_SESSION['user']->getId())->getId());
+        }
         require_once 'views/products.phtml';
         exit();
     }

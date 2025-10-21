@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos en carrito</title>
+</head>
+<body>
+    <?php
+    if (($_SESSION['user'])) {
+        echo "<a href='index.php?c=user&view_user=1'><h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1></a><br><br>";
+        if($carrito){
+            echo "En el carrito tienes " . count($carrito) . " producto distinto";
+        }else{
+            echo "En el carrito no tienes productos";
+        }
+        echo "<br><a href='index.php?c=product'>Volver Atras</a>";
+        echo "<br><hr>";
+    
+    }
+    ?>
+
+    <?php
+    foreach ($carrito as $product) {
+        $id = $product->getId();
+        $name = $product->getName();
+        $purchaseline=PurchaseLineRepository::getPurchaseLine($product->getId(),$purchase->getId());
+
+        echo "<p><img width='100px' src= './public/img/products/".$product->getImg()."'>";
+            echo "<h1>".$product->getName()."</h1>";
+            echo "<p>".$product->getContent()."</p>";
+            echo "<p>Precio: ".$product->getPrice()."€</p>";
+            echo "Cantidad: ";
+            echo "<a href='index.php?c=purchase&less_purchase_line=$id'>-</a>";
+            echo "  ".$purchaseline->getQuantity()."  ";
+            echo "<a href='index.php?c=purchase&viewpurchase=1&add_purchase_line=$id'>+</a>";
+            echo "<br><a href='index.php?c=purchase&delete_purchase_line=$id'>Eliminar Producto</a>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+    }
+    
+    ?>
+</body>
+
+</html>

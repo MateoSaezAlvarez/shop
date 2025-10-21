@@ -10,8 +10,16 @@
     if (($_SESSION['user'])) {
         echo "<a href='index.php?c=user&view_user=1'><h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1></a><br><br>";
         if (($_SESSION['user']->getRol()==1)) {
-            echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><hr>";
+            echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><br>";
         }
+        if($carrito){
+            echo "En el carrito tienes " . count($carrito) . " producto distinto";
+            echo " | ";
+            echo "<a href='index.php?c=purchase&view_purchase=1'>Ver carrito</a>";
+        }else{
+            echo "En el carrito no tienes productos";
+        }
+        echo "<br><hr>";
     }else{
         echo "<a href='index.php?c=user&login=1'>Iniciar Sesión</a>";
         echo " | ";
