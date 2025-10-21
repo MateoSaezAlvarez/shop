@@ -48,6 +48,16 @@ class PurchaseLineRepository{
         }
         return false;
     }
+
+    public static function getPurchaseLine($idProduct, $idPurchase){
+        $db = Connection::connect();
+        $q = 'SELECT * FROM purchaseLine WHERE idProduct = "' . $idProduct . '" AND idPurchase = "' . $idPurchase . '"';
+        $result = $db->query($q);
+        if ($row = $result->fetch_assoc()) {
+            return new PurchaseLine($row['id'], $row['quantity'], $row['idProduct'], $row['idPurchase']);
+        }
+        return false;
+    }
 }
 
 ?>
