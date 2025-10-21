@@ -22,14 +22,20 @@ class PurchaseLineRepository{
     }
 
     public static function addPurchaseLine($idProduct, $idPurchase) {
-        $db = Connection::connect();
+    // Verificar si ya existe una línea con ese producto en esa compra
+    $existingLine = self::getPurchaseLine($idProduct, $idPurchase);
+    
+    $db = Connection::connect();
+    if ($existingLine) {
+        // Si existe, incrementar la cantidad
+        $q = 'UPDATE purchaseLine SET quantity = quantity + 1 WHERE idProduct = "' . $idProduct . '" AND idPurchase = "' . $idPurchase . '"';
+    } else {
+        // Si no existe, insertar nueva línea
         $q = 'INSERT INTO purchaseLine (quantity, idProduct, idPurchase) VALUES (1, "' . $idProduct . '", "' . $idPurchase . '")';
-        $product = self::getProductByPurchaseLine($idPurchase);
-        if ($product !== null && $idProduct == $product->getId()) {
-            $q = 'UPDATE purchaseLine SET quantity = quantity + 1 WHERE idProduct = "' . $idProduct . '" AND idPurchase = "' . $idPurchase . '"';
-        }
-        return $db->query($q);
     }
+    
+    return $db->query($q);
+}
 
     public static function getPurchaseLineById($idPurchaseLine, $idPurchase, $idProduct){
         $db = Connection::connect();
@@ -70,13 +76,27 @@ class PurchaseLineRepository{
     }
 
     public static function lessPurchaseLine($idPurchaseLine) {
-        $db = Connection::connect();
+    // Primero, obtener la línea para saber su cantidad actual
+    $db = Connection::connect();
+    $q = 'SELECT quantity FROM purchaseLine WHERE id = "' . $idPurchaseLine . '"';
+    $result = $db->query($q);
+    
+    if (!$result || $result->num_rows === 0) {
+        return false; // No existe la línea
+    }
+    
+    $row = $result->fetch_assoc();
+    $currentQuantity = (int)$row['quantity'];
+    
+    if ($currentQuantity <= 1) {
+        // Eliminar si es 1 o menos
+        return self::deletePurchaseLine($idPurchaseLine);
+    } else {
+        // Restar 1
         $q = 'UPDATE purchaseLine SET quantity = quantity - 1 WHERE id = "' . $idPurchaseLine . '"';
-        if(self::getProductByPurchaseLine($idPurchaseLine)->getQuantity() < 1) {
-            self::deletePurchaseLine($idPurchaseLine);
-        }
         return $db->query($q);
     }
+}
 }
 
 ?>
