@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+</head>
+<body>
+    <h1>Inicio de Sesion</h1>
+    <a href="index.php?c=product">Volver Atras</a>
+    <br>
+    <br>
+    <br>
+    <form action="index.php?c=user" method="POST">
+        <input type="text" name="user" placeholder="Escribe tu usuario">
+        <input type="password" name="contra" placeholder="Escribe tu contraseña">
+        <input type="submit" name="login" value="Iniciar Sesion">
+    </form>
+<?php
+if (!empty($_SESSION['error'])){
+    echo "<p style='color:red'>".$_SESSION['error']."</p>";
+    unset($_SESSION['error']); 
+}
+    ?>
+</body>
+</html>

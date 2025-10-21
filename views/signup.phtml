@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+</head>
+<body>
+    <h1>Registrar usuario</h1>
+    <a href="index.php?c=product">Volver Atras</a>
+    <br>
+    <br>
+    <br>
+    <form action="index.php?c=user" method="POST">
+        <input type="text" name="ruser" placeholder="Escribe el nombre de usuario">
+        <input type="password" name="rcontra" placeholder="Escribe tu contraseña">
+        <input type="password" name="rcontra2" placeholder="Confirmar tu contraseñas">
+        <input type="submit" name="signup" value="Registrarse">
+    </form>
+    <?php
+if (!empty($_SESSION['error'])):
+    echo "<p style='color:red'>".$_SESSION['error']."</p>";
+    unset($_SESSION['error']); 
+    endif;
+    ?>
+</body>
+</html>

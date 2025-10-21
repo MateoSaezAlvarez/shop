@@ -7,9 +7,13 @@
 </head>
 <body>
     <?php
-    if (($_SESSION['user'])==true) {
+    if (($_SESSION['user'])) {
         echo "<a href='index.php?c=user&ver_user=1'><h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1></a><br><br>";
-        echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><hr>"
+        echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><hr>";
+    }else{
+        echo "<a href='index.php?c=user&login=1'>Iniciar Sesión</a>";
+        echo " | ";
+        echo "<a href='index.php?c=user&registro=1'>Registrarse</a>";
     }
     ?>
     
@@ -24,13 +28,14 @@
             <a href='index.php?id=$id'>$name</a>
             </h2>
         ";
-        if($_SESSION['user'] == 1){
+        if($_SESSION['user']){
             echo "<a href='index.php?c=purchase&add_purchase_line=$id'>Añadir al carrito</a>";
             echo "<br>";
+            echo "<br><a href='?c=user&logout=1'>Cerrar Sesion</a>";
         }
     }
 
-    echo "<br><a href='?c=user&logout=1'>Cerrar Sesion</a>";
+    
     ?>
 </body>
 
