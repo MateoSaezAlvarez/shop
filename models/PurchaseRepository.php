@@ -5,7 +5,7 @@ class PurchaseRepository{
         $db = Connection::connect();
         $q = 'SELECT *
               FROM purchase
-              WHERE idUser = "'.$idUser.'"';
+              WHERE idUser = "'.$idUser.'" AND payStatus = 1';
         $result = $db->query($q);
         $purchases = array();
         while ($row = $result->fetch_assoc()) {
@@ -14,16 +14,19 @@ class PurchaseRepository{
         return $purchases;
     }
 
-    public static function getPurchasebyId($idPurchase){
+    public static function getPurchasebyId($idPurchase, $payStatus){
         $db = Connection::connect();
         $q = 'SELECT *
               FROM purchase
-              WHERE id = "'.$idPurchase.'"';
+              WHERE id = "'.$idPurchase.'" AND payStatus = '.$payStatus;
         $result = $db->query($q);
         if ($row = $result->fetch_assoc()) {
             return new Purchase($row['id'], $row['datetime'], $row['payStatus'], $row['idUser']);
         }
         return false;
+    }
+    public static function getActivePurchase($idUser){
+        return self::getPurchasebyId(self::getPurchasesByUser($idUser)[0]->getId(), 0);
     }
 }
 

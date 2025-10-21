@@ -23,6 +23,9 @@ class Purchase{
     public function getIdUser(){
         return UserRepository::getUserById($this->idUser);
     }
+    public function getPurchaseLines(){
+        return PurchaseLineRepository::getPurchaseLinesByPurchase($this->id);
+    }
 }
 
 ?>
