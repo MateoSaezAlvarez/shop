@@ -5,7 +5,7 @@ class UserRepository {
     public static function addUser($username, $password, $password2){
         $db= Connection::connect();
         if($password==$password2){
-                $q = 'INSERT INTO user (username, password,img ,rol) VALUES ("'.$username.'", "'.md5($password).'","default.png", 0, 1)';
+                $q = 'INSERT INTO user (username, password,img ,rol, visible) VALUES ("'.$username.'", "'.md5($password).'","default.png", 0, 1)';
                 return $db->query($q);
             }
             return false;
