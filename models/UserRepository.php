@@ -5,11 +5,18 @@ class UserRepository {
     public static function addUser($username, $password, $password2){
         $db= Connection::connect();
         if($password==$password2){
-                $q = 'INSERT INTO user (username, password,img ,rol) VALUES ("'.$username.'", "'.md5($password).'","default.png", 0)';
+                $q = 'INSERT INTO user (username, password,img ,rol) VALUES ("'.$username.'", "'.md5($password).'","default.png", 0, 1)';
                 return $db->query($q);
             }
             return false;
     }
+
+    public static function deleteUser($idUser){
+        $db= Connection::connect();
+        $q = 'UPDATE user SET visible = 0 WHERE id = "'.$idUser.'"';
+        return $db->query($q);
+    }
+
     public static function editImg($idUser, $img){
         $db= Connection::connect();
         $q = 'UPDATE user SET img = "'.$img.'" WHERE id = "'.$idUser.'"';
@@ -23,7 +30,7 @@ class UserRepository {
         $q = 'UPDATE user SET img = "default.png" WHERE id = "'.$idUser.'"';
         return $db->query($q);
     }
-    public static function addAdmin($idUser){
+    /*public static function addAdmin($idUser){
         $db= Connection::connect();
         $q = 'UPDATE user SET rol = 1 WHERE id = "'.$idUser.'"';
         return $db->query($q);
@@ -33,6 +40,7 @@ class UserRepository {
         $q = 'UPDATE user SET rol = 0 WHERE id = "'.$idUser.'"';
         return $db->query($q);
     }
+    */
     public static function getUsers(){
         $db = Connection::connect();
         $q = 'SELECT *
@@ -40,7 +48,7 @@ class UserRepository {
         $result = $db->query($q);
         $users = array();
         while ($row = $result->fetch_assoc()) {
-            $users[] = new User($row['id'], $row['username'], $row['img'], $row['rol']);
+            $users[] = new User($row['id'], $row['username'], $row['img'], $row['rol'], $row['visible']);
         }
         return $users;
     }
@@ -49,7 +57,7 @@ class UserRepository {
         $q = 'SELECT * FROM user WHERE id = "'.$idUser.'"';
         $result = $db->query($q);
         if ($row = $result->fetch_assoc()) {
-            return new User($row['id'], $row['username'], $row['img'], $row['rol']);
+            return new User($row['id'], $row['username'], $row['img'], $row['rol'], $row['visible']);
         }
         return false;
     }
