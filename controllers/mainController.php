@@ -16,6 +16,10 @@ if (!isset($_SESSION['login'])) {
     $_SESSION['login'] = 0;
 }
 
+if (!isset($_SESSION['user'])) {
+    $_SESSION['user'] = 0;
+}
+
 //cargar modelo
 
 $db= Connection::connect();

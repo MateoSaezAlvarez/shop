@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+</head>
+<body>
+    <?php
+    if (($_SESSION['user'])==true) {
+        echo "<a href='index.php?c=user&ver_user=1'><h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1></a><br><br>";
+        echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><hr>"
+    }
+    ?>
+    
+
+    <?php
+    foreach ($products as $product) {
+        $id = $product->getId();
+        $name = $product->getName();
+
+        echo "
+        <h2>
+            <a href='index.php?id=$id'>$name</a>
+            </h2>
+        ";
+        if($_SESSION['user'] == 1){
+            echo "<a href='index.php?c=purchase&add_purchase_line=$id'>Añadir al carrito</a>";
+            echo "<br>";
+        }
+    }
+
+    echo "<br><a href='?c=user&logout=1'>Cerrar Sesion</a>";
+    ?>
+</body>
+
+</html>

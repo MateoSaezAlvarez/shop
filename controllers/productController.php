@@ -34,5 +34,4 @@ if ($_SESSION['login'] == 1) {
         require_once 'views/products.phtml';
         exit();
     }
-}
 ?>
