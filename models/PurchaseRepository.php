@@ -50,6 +50,22 @@ class PurchaseRepository{
         }
         return false;
     }
+
+    public static function finishPurchase($idPurchase, $idUser){
+        $db = Connection::connect();
+        $q = 'UPDATE purchase SET payStatus = 1, datetime = NOW() WHERE id = "'.$idPurchase.'" AND idUser = "'.$idUser.'" AND payStatus = 0';
+        return $db->query($q);
+    }
+
+    public static function getTotal($idPurchase, $idUser){
+        $db = Connection::connect();
+        $q = 'SELECT SUM(quantity * price) as total FROM purchaseLine INNER JOIN product ON purchaseLine.idProduct = product.id WHERE idPurchase = "'.$idPurchase.'" AND idUser = "'.$idUser.'"';
+        $result = $db->query($q);
+        if ($row = $result->fetch_assoc()) {
+            return $row['total'];
+        }
+        return false;
+    }
 }
 
 ?>
