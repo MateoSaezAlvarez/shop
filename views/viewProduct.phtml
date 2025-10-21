@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php
+        echo "<title>Producto -  ".$product->getName()."</title>";
+    ?>
+</head>
+<body>
+    <?php
+    if(!$product){
+        echo "<script>alert('Producto no encontrada')</script>";
+        echo "<a href='./index.php'>Volver</a>";
+        exit;
+    }else{
+            echo "<p><img width='100px' src= './public/img/products/".$product->getImg()."'>";
+            echo "<h1>".$product->getName()."</h1>";
+            echo "<p>".$product->getContent()."</p>";
+            echo "<p>Precio: ".$product->getPrice()."€</p>";
+            if($_SESSION['user']){
+            echo "<br>";
+            echo "<a href='index.php?c=purchase&add_purchase_line=".$product->getId()."'>Añadir al carrito</a>";
+            echo "<br><br>";
+            if($_SESSION['user']->getRol()==1){
+                echo "<a href='index.php?c=product&delete_product=".$product->getId().">
+               onclick=\"return confirm('¿Seguro que quieres eliminar el Producto".$product->getName()."')\">
+               Eliminar Producto
+            </a>";
+            echo "<br>";
+            echo "<a href='index.php?c=product&edit_product=".$product->getId()."'>Editar Producto</a>";
+            }
+            }
+            echo "<br>";
+            }
+            echo "<br>";
+            echo "<br>";
+            echo "<a href='./index.php'>Volver</a>";
+    ?>
+</body>
+</html>

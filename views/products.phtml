@@ -8,7 +8,7 @@
 <body>
     <?php
     if (($_SESSION['user'])) {
-        echo "<a href='index.php?c=user&ver_user=1'><h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1></a><br><br>";
+        echo "<a href='index.php?c=user&view_user=1'><h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1></a><br><br>";
         if (($_SESSION['user']->getRol()==1)) {
             echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><hr>";
         }
@@ -35,10 +35,11 @@
         if($_SESSION['user']){
             echo "<a href='index.php?c=purchase&add_purchase_line=$id'>Añadir al carrito</a>";
             echo "<br>";
-            echo "<br><a href='?c=user&logout=1'>Cerrar Sesion</a>";
         }
     }
-
+    if($_SESSION['user']){
+            echo "<br><a href='?c=user&logout=1'>Cerrar Sesion</a>";
+        }
     
     ?>
 </body>

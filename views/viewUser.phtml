@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Usuario</title>
+</head>
+<body>
+    <?php
+        echo "<h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1><br><br>";
+        echo "<a href='index.php?c=user&edit_user=1'>Editar Usuario</a><br>";
+        echo "<a href='index.php?c=purchase&view_purchase=1'>Ver historico de pedidos</a><br>";
+        echo "<br><a href='index.php?c=product'>Volver Atras</a>";
+    ?>
+</body>
+
+</html>

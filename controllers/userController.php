@@ -27,8 +27,15 @@ if (isset($_GET['logout'])) {
         }
     }
     */
+    if($_SESSION['login']){
+        
     if(isset($_GET['edit_user'])){
             require_once('views/editUser.phtml');
+            exit();
+    }
+
+    if(isset($_GET['view_user'])){
+            require_once('views/viewUser.phtml');
             exit();
     }
 
@@ -77,7 +84,7 @@ if (isset($_GET['logout'])) {
     }   
     }
     */
-
+}
 
     if(isset($_POST['signup'])){
         if (!empty($_POST["ruser"]) && !empty($_POST["rcontra"]) && !empty($_POST["rcontra2"])) {

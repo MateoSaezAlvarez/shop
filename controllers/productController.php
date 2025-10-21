@@ -30,7 +30,7 @@ if ($_SESSION['login'] == 1) {
             $product=ProductRepository::getProductById($_GET["id"]);
             require_once 'views/viewProduct.phtml';
     }else{
-        $products=ProductRepository::getProducts();
+        $products = ProductRepository::getProducts() ?? [];
         require_once 'views/products.phtml';
         exit();
     }
