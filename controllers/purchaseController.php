@@ -31,5 +31,12 @@ if($_SESSION['login']){
         require_once 'views/viewPurchaseActive.phtml';
         exit;
     }
+    if(isset($_GET['pay'])){
+        $idPurchase = $_GET['pay'];
+        PurchaseRepository::finishPurchase($idPurchase, $_SESSION['user']->getId());
+        header("Location: index.php?c=product");
+        exit;
+    }
+
 }
 ?>

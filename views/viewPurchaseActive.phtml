@@ -40,7 +40,8 @@
             echo "<br>";
             echo "<br>";
     }
-    
+    echo "Precio Total: ".PurchaseRepository::getTotal($purchase->getId(),$_SESSION['user']->getId())."€";
+    echo "<br><a href='index.php?c=purchase&pay=".$purchase->getId()."'>Pagar</a>";
     ?>
 </body>
 
