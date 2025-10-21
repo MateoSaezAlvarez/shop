@@ -61,6 +61,18 @@ class PurchaseLineRepository{
         }
         return false;
     }
+
+    public static function deletePurchaseLine($idPurchaseLine) {
+        $db = Connection::connect();
+        $q = 'DELETE FROM purchaseLine WHERE id = "' . $idPurchaseLine . '"';
+        return $db->query($q);
+    }
+
+    public static function lessPurchaseLine($idPurchaseLine) {
+        $db = Connection::connect();
+        $q = 'UPDATE purchaseLine SET quantity = quantity - 1 WHERE id = "' . $idPurchaseLine . '"';
+        return $db->query($q);
+    }
 }
 
 ?>
