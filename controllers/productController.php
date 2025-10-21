@@ -2,7 +2,7 @@
 
 if ($_SESSION['login'] == 1) { 
     if(isset($_GET['add_product'])){
-        require_once('views/addTheme.phtml');
+        require_once('views/addProduct.phtml');
         exit;
     }
 

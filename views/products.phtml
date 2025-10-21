@@ -9,11 +9,14 @@
     <?php
     if (($_SESSION['user'])) {
         echo "<a href='index.php?c=user&ver_user=1'><h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1></a><br><br>";
-        echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><hr>";
+        if (($_SESSION['user']->getRol()==1)) {
+            echo "<a href='index.php?c=product&add_product=1'>Registrar Producto</a><hr>";
+        }
     }else{
         echo "<a href='index.php?c=user&login=1'>Iniciar Sesión</a>";
         echo " | ";
         echo "<a href='index.php?c=user&registro=1'>Registrarse</a>";
+        echo "<hr>";
     }
     ?>
     
@@ -24,6 +27,7 @@
         $name = $product->getName();
 
         echo "
+        <img width='60px' src= './public/img/products/".$product->getImg()."'>
         <h2>
             <a href='index.php?id=$id'>$name</a>
             </h2>
