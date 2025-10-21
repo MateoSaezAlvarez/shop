@@ -24,7 +24,8 @@ class PurchaseLineRepository{
     public static function addPurchaseLine($idProduct, $idPurchase) {
         $db = Connection::connect();
         $q = 'INSERT INTO purchaseLine (quantity, idProduct, idPurchase) VALUES (1, "' . $idProduct . '", "' . $idPurchase . '")';
-        if ($idProduct == self::getProductByPurchaseLine($idPurchase)->getId()) {
+        $product = self::getProductByPurchaseLine($idPurchase);
+        if ($product !== null && $idProduct == $product->getId()) {
             $q = 'UPDATE purchaseLine SET quantity = quantity + 1 WHERE idProduct = "' . $idProduct . '" AND idPurchase = "' . $idPurchase . '"';
         }
         return $db->query($q);
@@ -71,6 +72,9 @@ class PurchaseLineRepository{
     public static function lessPurchaseLine($idPurchaseLine) {
         $db = Connection::connect();
         $q = 'UPDATE purchaseLine SET quantity = quantity - 1 WHERE id = "' . $idPurchaseLine . '"';
+        if(self::getProductByPurchaseLine($idPurchaseLine)->getQuantity() < 1) {
+            self::deletePurchaseLine($idPurchaseLine);
+        }
         return $db->query($q);
     }
 }
