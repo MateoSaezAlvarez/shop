@@ -25,8 +25,30 @@ class PurchaseRepository{
         }
         return false;
     }
-    public static function getActivePurchase($idUser){
+    /*public static function getActivePurchase($idUser){
         return self::getPurchasebyId(self::getPurchasesByUser($idUser)[0]->getId(), 0);
+    }
+    */
+    public static function getActivePurchase($idUser){
+        $db = Connection::connect();
+        $q = 'SELECT *
+              FROM purchase
+              WHERE idUser = "'.$idUser.'" AND payStatus = 0';
+        $result = $db->query($q);
+        if ($row = $result->fetch_assoc()) {
+            return new Purchase($row['id'], $row['datetime'], $row['payStatus'], $row['idUser']);
+        } else{
+            $q = 'INSERT INTO purchase (datetime, payStatus, idUser) VALUES (null, 0, "'.$idUser.'")';
+            $db->query($q);
+            $q = 'SELECT *
+              FROM purchase
+              WHERE idUser = "'.$idUser.'" AND payStatus = 0';
+            $result = $db->query($q);
+            if ($row = $result->fetch_assoc()) {
+                return new Purchase($row['id'], $row['datetime'], $row['payStatus'], $row['idUser']);
+            }
+        }
+        return false;
     }
 }
 
