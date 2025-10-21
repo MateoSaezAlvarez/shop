@@ -5,7 +5,7 @@ class ProductRepository{
     public static function addProduct($name, $content, $price, $img){
         $db= Connection::connect();
         if($_SESSION['user']->getRol() == 1){
-            $q = 'INSERT INTO product (name, content, price, img) VALUES ("'.$content.'", '.$price.', "'.$img.'", 1)';
+            $q = 'INSERT INTO product (name, content, price, img) VALUES ("'.$name.'", "'.$content.'", '.$price.', "'.$img.'", 1)';
             if($db->query($q)){
                 return $db->insert_id;
             }else{ 
