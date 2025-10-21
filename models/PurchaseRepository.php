@@ -58,14 +58,21 @@ class PurchaseRepository{
     }
 
     public static function getTotal($idPurchase, $idUser){
-        $db = Connection::connect();
-        $q = 'SELECT SUM(quantity * price) as total FROM purchaseLine INNER JOIN product ON purchaseLine.idProduct = product.id WHERE idPurchase = "'.$idPurchase.'" AND idUser = "'.$idUser.'"';
-        $result = $db->query($q);
-        if ($row = $result->fetch_assoc()) {
-            return $row['total'];
-        }
-        return false;
+    $db = Connection::connect();
+    $q = '
+        SELECT SUM(pl.quantity * p.price) AS total
+        FROM purchaseLine AS pl
+        INNER JOIN product AS p ON pl.idProduct = p.id
+        INNER JOIN purchase AS pu ON pl.idPurchase = pu.id
+        WHERE pl.idPurchase = "'.$idPurchase.'" 
+          AND pu.idUser = "'.$idUser.'"';
+    $result = $db->query($q);
+    if ($row = $result->fetch_assoc()) {
+        return $row['total'] ?? 0;
     }
+    return false;
+}
+
 }
 
 ?>
