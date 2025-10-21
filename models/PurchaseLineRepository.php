@@ -21,9 +21,9 @@ class PurchaseLineRepository{
         return $db->query($q);
     }
 
-    public static function addPurchaseLine($quantity, $idProduct, $idPurchase) {
+    public static function addPurchaseLine($idProduct, $idPurchase) {
         $db = Connection::connect();
-        $q = 'INSERT INTO purchaseLine (quantity, idProduct, idPurchase) VALUES ("' . $quantity . '", "' . $idProduct . '", "' . $idPurchase . '")';
+        $q = 'INSERT INTO purchaseLine (quantity, idProduct, idPurchase) VALUES (1, "' . $idProduct . '", "' . $idPurchase . '")';
         return $db->query($q);
     }
 
