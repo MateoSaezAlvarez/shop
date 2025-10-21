@@ -68,7 +68,7 @@ class UserRepository {
             $result = $db->query($q);
             if($row = $result-> fetch_assoc()){
                 if($row['password']==md5($password)){
-                $_SESSION['user']= new User($row['id'],$row['username'], $row['img'], $row['rol']);
+                $_SESSION['user']= new User($row['id'],$row['username'], $row['img'], $row['rol'], $row['visible']);
                 header("Location: index.php");
                 $_SESSION['login'] = 1;
                 }else{
