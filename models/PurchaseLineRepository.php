@@ -37,6 +37,7 @@ class PurchaseLineRepository{
     $existingLine = self::getPurchaseLine($idProduct, $idPurchase);
     $db = Connection::connect();
     if ($existingLine) {
+        if($existingLine->getQuantity() >= ProductRepository::getProductById($idProduct)->getStock()) return false;
         $q = 'UPDATE purchaseLine SET quantity = quantity + 1 WHERE idProduct = "' . $idProduct . '" AND idPurchase = "' . $idPurchase . '"';
     } else {
         $q = 'INSERT INTO purchaseLine (quantity, idProduct, idPurchase) VALUES (1, "' . $idProduct . '", "' . $idPurchase . '")';
