@@ -14,9 +14,9 @@
         header("Location: index.php");
     }
     ?>
-    <form action="index.php?c=product&&idProduct=<?php echo $product->getId()?>" method="POST" enctype="multipart/form-data">
-        <input type="number" name="price" value="<?php echo $product->getPrice()?>" placeholder="Escribe el precio">
-        <input type="number" name="stock" value="<?php echo$product->getStock()?>" placeholder="Escribe el stock del producto">
+    <form action="index.php?c=product&&idProduct=<?= $product->getId()?>" method="POST" enctype="multipart/form-data">
+        <input type="number" name="price" value="<?= $product->getPrice()?>" placeholder="Escribe el precio">
+        <input type="number" name="stock" value="<?= $product->getStock()?>" placeholder="Escribe el stock del producto">
         <input type="file" name="img">
         <input type="submit" name="edit_producto" value="Editar Producto">
     </form>

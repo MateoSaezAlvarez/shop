@@ -31,6 +31,11 @@ if($_SESSION['login']){
         require_once 'views/viewPurchaseActive.phtml';
         exit;
     }
+    if(isset($_GET['view_purchase_history'])){
+        $purchases = PurchaseRepository::getPurchasesByUser($_SESSION['user']->getId());
+        require_once 'views/viewPurchaseHistory.phtml';
+        exit;
+    }
     if(isset($_GET['pay'])){
         $idPurchase = $_GET['pay'];
         PurchaseRepository::finishPurchase($idPurchase, $_SESSION['user']->getId());

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos finalizados</title>
+</head>
+<body>
+    <?php
+    if (($_SESSION['user'])) {
+        echo "<h1><img width='60px' src= './public/img/profile/".$_SESSION['user']->getImg()."'> Hola " . htmlspecialchars($_SESSION['user']->getUsername()) . "</h1>";
+        echo "<h2>Tu Historial de Pedidos: </h2>";
+        echo "<a href='index.php?c=user&view_user=1'>Volver atras</a>";
+        echo "<br><hr>";
+    
+    }
+
+    $contador = 1;
+    if(!empty($purchases)){
+    foreach($purchases as $purchase){
+        $carrito = PurchaseLineRepository::getProductsByPurchase($purchase->getId());
+        echo "<h2>Pedido: ".$contador."</h2>";
+        echo "Pedido realizado el: ".date("d/m/Y - H:i", strtotime($purchase->getDateTime()));
+        echo "<h3>Productos:</h3>";
+        
+        
+        foreach ($carrito as $product) {
+            $id = $product->getId();
+            $name = $product->getName();
+            $purchaseline=PurchaseLineRepository::getPurchaseLine($product->getId(),$purchase->getId());
+
+            echo "<p><img width='100px' src= './public/img/products/".$product->getImg()."'>";
+            echo "<h4>".$product->getName()."</h4>";
+            echo "<p>".$product->getContent()."</p>";
+            echo "<p>Precio: ".$product->getPrice()."€</p>";
+            echo "Cantidad: ";
+            echo "  ".$purchaseline->getQuantity()."  ";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+    }
+
+    if($carrito){
+    echo "Precio Total: ".PurchaseRepository::getTotal($purchase->getId(),$_SESSION['user']->getId())."€";
+    }
+    echo "<br><hr><br>";
+    $contador++;
+        }
+    }
+    
+    ?>
+</body>
+
+</html>

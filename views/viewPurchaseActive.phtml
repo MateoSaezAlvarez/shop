@@ -18,9 +18,7 @@
         echo "<br><hr>";
     
     }
-    ?>
-
-    <?php
+    
     foreach ($carrito as $product) {
         $id = $product->getId();
         $name = $product->getName();
@@ -40,6 +38,7 @@
             echo "<br>";
             echo "<br>";
     }
+
     if($carrito){
     echo "Precio Total: ".PurchaseRepository::getTotal($purchase->getId(),$_SESSION['user']->getId())."€";
     echo "<br><a href='index.php?c=purchase&pay=".$purchase->getId()."'>Pagar</a>";
