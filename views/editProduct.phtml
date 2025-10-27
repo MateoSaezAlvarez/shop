@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+</head>
+<body>
+    <h2>Hola <?php echo htmlspecialchars($_SESSION['user']->getUsername()) ?></h2>
+    <?php
+    if($_SESSION['user']->getRol()==1){
+        echo "<h1>Editar Producto: ".$product->getName()."</h1>";
+    }else{
+        header("Location: index.php");
+    }
+    ?>
+    <form action="index.php?c=product&&idProduct=<?php echo $product->getId()?>" method="POST" enctype="multipart/form-data">
+        <input type="number" name="price" value="<?php echo $product->getPrice()?>" placeholder="Escribe el precio">
+        <input type="number" name="stock" value="<?php echo$product->getStock()?>" placeholder="Escribe el stock del producto">
+        <input type="file" name="img">
+        <input type="submit" name="edit_producto" value="Editar Producto">
+    </form>
+    <br>
+    <?php
+    echo "<a href='index.php?id=".$product->getId()."'>Volver Atras</a>";
+if (!empty($_SESSION['error'])):
+    echo "<p style='color:red'>".$_SESSION['error']."</p>";
+    unset($_SESSION['error']); 
+    endif;
+    ?>
+</body>
+</html>
