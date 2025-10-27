@@ -9,7 +9,7 @@ class PurchaseLineRepository{
             $purchaseLine = new PurchaseLine($row['id'], $row['quantity'], $row['idProduct'], $row['idPurchase']);
             $product = $purchaseLine->getProduct(); 
             if ($product !== null) {
-                $products[] = $product;º
+                $products[] = $product;
             }
         }
         return $products;
