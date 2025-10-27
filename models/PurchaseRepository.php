@@ -5,7 +5,7 @@ class PurchaseRepository{
         $db = Connection::connect();
         $q = 'SELECT *
             FROM purchase
-            WHERE idUser = "'.$idUser.'" AND payStatus = 1';
+            WHERE idUser = "'.$idUser.'" AND payStatus = 1 ORDER BY datetime DESC';
         $result = $db->query($q);
         $purchases = array();
         while ($row = $result->fetch_assoc()) {
