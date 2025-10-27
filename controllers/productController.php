@@ -13,14 +13,14 @@ if ($_SESSION['login'] == 1) {
     }
 
     if(isset($_POST['create_product'])){
-        if (!empty($_POST["name"]) && !empty($_POST["content"]) && !empty($_POST["price"]) && isset($_FILES["img"] )) {
+        if (!empty($_POST["name"]) && !empty($_POST["content"]) && !empty($_POST["price"])  && !empty($_POST["stock"]) && isset($_FILES["img"] )) {
 
             $nameImg = $_POST['name'].".png";
             if(!FileHelper::fileHandler($_FILES["img"]["tmp_name"], "public/img/products/".$nameImg)){
                 $nameImg = "";
             }
 
-            header("Location: index.php?c=product&id=".ProductRepository::addProduct($_POST["name"], $_POST["content"], $_POST["price"], $nameImg));
+            header("Location: index.php?c=product&id=".ProductRepository::addProduct($_POST["name"], $_POST["content"], $_POST["price"], $_POST["stock"], $nameImg));
             exit;
         }
     }

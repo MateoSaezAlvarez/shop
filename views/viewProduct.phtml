@@ -18,9 +18,18 @@
             echo "<h1>".$product->getName()."</h1>";
             echo "<p>".$product->getContent()."</p>";
             echo "<p>Precio: ".$product->getPrice()."€</p>";
+            if($product->getStock()!=0){
+                echo "<p>Stock: ".$product->getStock()."</p>";
+            }else{
+                echo "<p>Producto agotado</p>";
+            }
             if($_SESSION['user']){
             echo "<br>";
-            echo "<a href='index.php?c=purchase&add_purchase_line=".$product->getId()."'>Añadir al carrito</a>";
+            if($product->getStock()!=0){
+                echo "<a href='index.php?c=purchase&add_purchase_line=".$product->getId()."'>Añadir al carrito</a>";
+            }else{
+                echo "<s>Añadir al carrito</s>";
+            }
             echo "<br><br>";
             if($_SESSION['user']->getRol()==1){
                 echo "<a href='index.php?c=product&delete_product=".$product->getId().">

@@ -40,8 +40,17 @@
             <a href='index.php?id=$id'>$name</a>
             </h2>
         ";
+        if($product->getStock()!=0){
+                echo "<p>Stock: ".$product->getStock()."</p>";
+        }else{
+                echo "<p>Producto agotado</p>";
+        }
         if($_SESSION['user']){
-            echo "<a href='index.php?c=purchase&add_purchase_line=$id'>Añadir al carrito</a>";
+            if($product->getStock()!=0){
+                echo "<a href='index.php?c=purchase&add_purchase_line=".$product->getId()."'>Añadir al carrito</a>";
+            }else{
+                echo "<s>Añadir al carrito</s>";
+            }
             echo "<br>";
         }
     }
