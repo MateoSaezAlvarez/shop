@@ -7,9 +7,9 @@ class PurchaseLineRepository{
         $products = array();
         while ($row = $result->fetch_assoc()) {
             $purchaseLine = new PurchaseLine($row['id'], $row['quantity'], $row['idProduct'], $row['idPurchase']);
-            $product = $purchaseLine->getIdProduct(); 
+            $product = $purchaseLine->getProduct(); 
             if ($product !== null) {
-                $products[] = $product;
+                $products[] = $product;º
             }
         }
         return $products;
