@@ -5,13 +5,15 @@ class Product{
     private $name;
     private $content;
     private $price;
+    private $stock;
     private $img;
     private $visible;
-    public function __construct($id,$name,$content,$price,$img, $visible){
+    public function __construct($id,$name,$content,$price,$stock,$img, $visible){
         $this->id=$id;
         $this->name = $name;
         $this->content = $content;
         $this->price = $price;
+        $this->stock = $stock;
         $this->img = $img;
         $this->visible = $visible;
     }
@@ -26,6 +28,9 @@ class Product{
     }
     public function getPrice(){
         return $this->price;
+    }
+    public function getStock(){
+        return $this->stock;
     }
     public function getImg(){
         return $this->img;

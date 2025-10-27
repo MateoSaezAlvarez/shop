@@ -44,7 +44,7 @@ class UserRepository {
     public static function getUsers(){
         $db = Connection::connect();
         $q = 'SELECT *
-              FROM user';
+            FROM user';
         $result = $db->query($q);
         $users = array();
         while ($row = $result->fetch_assoc()) {

@@ -15,6 +15,18 @@ class PurchaseLineRepository{
         return $products;
     }
 
+    public static function getPurchaseLinesByPurchase($idPurchase){
+        $db = Connection::connect();
+        $q = 'SELECT * FROM purchaseLine WHERE idPurchase = "' . $idPurchase . '"';
+        $result = $db->query($q);
+        $purchaseLines = array();
+        while ($row = $result->fetch_assoc()) {
+            $purchaseLine = new PurchaseLine($row['id'], $row['quantity'], $row['idProduct'], $row['idPurchase']);
+            $purchaseLines[] = $purchaseLine;
+        }
+        return $purchaseLines;
+    }
+
     public static function editPurchaseLine($idPurchaseLine, $quantity) {
         $db = Connection::connect();
         $q = 'UPDATE purchaseLine SET quantity = "' . $quantity . '" WHERE id = "' . $idPurchaseLine . '"';
@@ -22,15 +34,11 @@ class PurchaseLineRepository{
     }
 
     public static function addPurchaseLine($idProduct, $idPurchase) {
-    // Verificar si ya existe una línea con ese producto en esa compra
     $existingLine = self::getPurchaseLine($idProduct, $idPurchase);
-    
     $db = Connection::connect();
     if ($existingLine) {
-        // Si existe, incrementar la cantidad
         $q = 'UPDATE purchaseLine SET quantity = quantity + 1 WHERE idProduct = "' . $idProduct . '" AND idPurchase = "' . $idPurchase . '"';
     } else {
-        // Si no existe, insertar nueva línea
         $q = 'INSERT INTO purchaseLine (quantity, idProduct, idPurchase) VALUES (1, "' . $idProduct . '", "' . $idPurchase . '")';
     }
     
@@ -40,8 +48,8 @@ class PurchaseLineRepository{
     public static function getPurchaseLineById($idPurchaseLine, $idPurchase, $idProduct){
         $db = Connection::connect();
         $q = 'SELECT *
-              FROM purchaseLine
-              WHERE id = "'.$idPurchaseLine.'" AND idPurchase = "'.$idPurchase.'" AND idProduct = "'.$idProduct.'"';
+            FROM purchaseLine
+            WHERE id = "'.$idPurchaseLine.'" AND idPurchase = "'.$idPurchase.'" AND idProduct = "'.$idProduct.'"';
         $result = $db->query($q);
         if ($row = $result->fetch_assoc()) {
             return new PurchaseLine($row['id'], $row['quantity'], $row['idProduct'], $row['idPurchase']);
@@ -76,23 +84,21 @@ class PurchaseLineRepository{
     }
 
     public static function lessPurchaseLine($idPurchaseLine) {
-    // Primero, obtener la línea para saber su cantidad actual
     $db = Connection::connect();
     $q = 'SELECT quantity FROM purchaseLine WHERE id = "' . $idPurchaseLine . '"';
     $result = $db->query($q);
     
     if (!$result || $result->num_rows === 0) {
-        return false; // No existe la línea
+        return false;
     }
     
     $row = $result->fetch_assoc();
     $currentQuantity = (int)$row['quantity'];
     
     if ($currentQuantity <= 1) {
-        // Eliminar si es 1 o menos
+        
         return self::deletePurchaseLine($idPurchaseLine);
     } else {
-        // Restar 1
         $q = 'UPDATE purchaseLine SET quantity = quantity - 1 WHERE id = "' . $idPurchaseLine . '"';
         return $db->query($q);
     }

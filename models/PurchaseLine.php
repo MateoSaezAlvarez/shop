@@ -17,10 +17,10 @@ class PurchaseLine{
     public function getQuantity(){
         return $this->quantity;
     }
-    public function getIdProduct(){
+    public function getProduct(){
         return ProductRepository::getProductById($this->idProduct);
     }
-    public function getIdPurchase(){
+    public function getPurchase(){
         return PurchaseRepository::getPurchaseById($this->idPurchase);
     }
 }
