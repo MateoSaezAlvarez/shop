@@ -52,7 +52,7 @@ public static function editProduct($idProduct,$price, $stock, $img){
         return false;
     }
     
-}
+
 
 public static function addStock($idProduct,$stock){
     $db= Connection::connect();
@@ -68,5 +68,11 @@ public static function deleteStock($idProduct,$stock){
         $q = 'UPDATE product SET stock = stock - '.$stock.' WHERE id = "'.$idProduct.'"';
         return $db->query($q);
     return false;
+}
+
+
+
+
+
 }
 ?>
